@@ -37,7 +37,7 @@
           </li>
         </ul>
       </div>
-      <!-- 주요 서비스 -->
+      <!-- 주요 서비스 start -->
       <div class="group major-services">
         <div class="group__title">
           주요 서비스
@@ -53,15 +53,116 @@
           </li>
         </ul>
       </div>
+      <!-- 주요 서비스 end -->
+
+      <!-- outlets start -->
+      <div
+        ref="outlets"
+        class="group outlets"
+        @mouseenter="categoryHover = -1">
+        <div
+          class="group__title"
+          @click="toggleGroup('outlets')">
+          {{ navigations.outlets.title }}
+          <div class="toggle-list"></div>
+        </div>
+        <ul
+          v-show="isShowOutlets"
+          v-cloak
+          class="group__list">
+          <li
+            v-for="item in navigations.outlets.list"
+            :key="item.name">
+            <a :href="item.href">
+              <img
+                :src="item.src"
+                :alt="item.name"
+                width="250" />
+            </a>
+          </li>
+        </ul>
+      </div>
+      <!-- outlets end -->
+
+      <!-- partners start -->
+      <div
+        ref="partners"
+        class="group partners"
+        @mouseenter="categoryHover = -1">
+        <div
+          class="group__title"
+          @click="toggleGroup('partners')">
+          {{ navigations.partners.title }}
+          <div class="toggle-list"></div>
+        </div>
+        <ul
+          v-show="isShowPartners"
+          v-cloak
+          class="group__list">
+          <li
+            v-for="item in navigations.partners.list"
+            :key="item.name">
+            <a :href="item.href">
+              <img
+                :src="item.src"
+                :alt="item.name"
+                width="112" />
+            </a>
+          </li>
+        </ul>
+      </div>
+      <!-- partners end -->
+
+      <!-- brandMall start -->
+      <div
+         ref="brandMall"
+         class="group brand-mall"
+         @mouseenter="categoryHover = -1">
+         <div
+           class="group__title"
+           @click="toggleGroup('brandMall')">
+           {{ navigations.brandMall.title }}
+           <div class="toggle-list"></div>
+         </div>
+         <ul
+           v-show="isShowBrandMall"
+           v-cloak
+           class="group__list">
+           <li
+             v-for="item in navigations.brandMall.list"
+             :key="item.name">
+             <a :href="item.href">
+               <img
+                 :src="item.src"
+                 :alt="item.name"
+                 width="55" />
+               <span class="brand-name">{{ item.name }}</span>
+             </a>
+           </li>
+         </ul>
+       </div>
+      </div>
+      <!-- brandMall end -->
+
+      <!-- exhibitions start -->
+      <div class="exhibitions">
+      <a :href="navigations.exhibitions.href">
+        <img
+          :src="navigations.exhibitions.src"
+          :alt="navigations.exhibitions.name" />
+      </a>
     </div>
+    <!-- exhibitions end -->
   </nav>
+
+  <!-- dimmed start -->
   <div 
     v-if="isShow"
     class="nav-bg" 
     @click="offNav"
   >
-
   </div>
+  <!-- dimmed end -->
 </template>
 
 <script>
@@ -70,7 +171,7 @@ export default {
     return {
       navigations: {},
       done: false,
-      categoryHover: -1
+      categoryHover: -1,
     }
   },
   computed: {
