@@ -1,5 +1,5 @@
 <template>
-  <header>
+  <header :class="{fixed: isFixed}">
     <div class="inner">
       <div 
         class="open-nav-drawer"
