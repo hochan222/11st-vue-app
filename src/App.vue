@@ -4,6 +4,7 @@
   <TheHeader />
   <Billboard /> 
   <GlobalBanner />
+  <Direct />
 </template>
 
 <script>
@@ -12,6 +13,7 @@ import RNB from '~/components/RNB'
 import TheHeader from '~/components/TheHeader'
 import Billboard from '~/components/Billboard'
 import GlobalBanner from '~/components/GlobalBanner'
+import Direct from '~/components/Direct'
 
 export default {
   components: {
@@ -20,6 +22,7 @@ export default {
     TheHeader,
     Billboard,
     GlobalBanner,
+    Direct,
   }
 }
 </script>
