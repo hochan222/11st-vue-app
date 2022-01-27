@@ -4,7 +4,7 @@
     <div class="user">
       <a href="#">로그인</a>
       <div class="flex-space"></div>
-      <div class="close-nav" @click="offNav"></div>
+      <div class="close-nav" @click="offNav('LNB')"></div>
     </div>
     <!-- navigation container space -->
     <div 
@@ -160,7 +160,7 @@
   <div 
     v-if="isShow"
     class="nav-bg" 
-    @click="offNav"
+    @click="offNav('LNB')"
   >
   </div>
   <!-- dimmed end -->
@@ -182,7 +182,7 @@ export default {
   },
   computed: {
     isShow() {
-      return this.$store.state.navigation.isShow
+      return this.$store.state.navigation.isShowLNB
     }
   },
   created() {
@@ -196,8 +196,8 @@ export default {
       })
       this.done = true
     },
-    offNav() {
-      this.$store.dispatch('navigation/offNav')
+    offNav(name) {
+      this.$store.dispatch('navigation/offNav', name)
     },
     toggleGroup (name) {
       const pascalCaseName = _upperFirst(name)

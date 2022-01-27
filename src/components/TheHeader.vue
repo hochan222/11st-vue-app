@@ -3,7 +3,7 @@
     <div class="inner">
       <div 
         class="open-nav-drawer"
-        @click="onNav"
+        @click="onNav('LNB')"
       >
 
       </div>
@@ -187,8 +187,8 @@ export default {
       })      
       // Swiper end
     },
-    onNav() {
-      this.$store.dispatch('navigation/onNav')
+    onNav(name) {
+      this.$store.dispatch('navigation/onNav', name)
     },
     async search() {
       const data = await this.$search({

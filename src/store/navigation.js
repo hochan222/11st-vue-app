@@ -1,27 +1,28 @@
 export default {
   namespaced: true,
   state: () => ({
-    isShow: false
+    isShowLNB: false,
+    isShowRNB: false
   }),
   getters: {
 
   },
-  mutations: {
+  mutations: { // commit 으로 실행
     setState(state, payload) {
       Object.keys(payload).forEach((key)=>{
         state[key] = payload[key]
       })
     }
   },
-  actions: {
-    onNav({ commit }) {
+  actions: { // dispatch 로 실행
+    onNav ({ commit }, name) {
       commit('setState', {
-        isShow: true
+        [`isShow${name}`]: true
       })
     },
-    offNav({ commit }) {
+    offNav ({ commit }, name) {
       commit('setState', {
-        isShow: false
+        [`isShow${name}`]: false
       })
     }
   }
