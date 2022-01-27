@@ -5,6 +5,7 @@
   <Billboard /> 
   <GlobalBanner />
   <Direct />
+  <HotFocus />
 </template>
 
 <script>
@@ -14,6 +15,7 @@ import TheHeader from '~/components/TheHeader'
 import Billboard from '~/components/Billboard'
 import GlobalBanner from '~/components/GlobalBanner'
 import Direct from '~/components/Direct'
+import HotFocus from '~/components/HotFocus.vue'
 
 export default {
   components: {
@@ -23,6 +25,7 @@ export default {
     Billboard,
     GlobalBanner,
     Direct,
+    HotFocus,
   }
 }
 </script>
