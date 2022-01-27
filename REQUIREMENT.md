@@ -1,0 +1,1 @@
+- [ ] GNB의 검색 결과를 console.log에 출력한다.
