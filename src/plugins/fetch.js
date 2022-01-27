@@ -1,12 +1,21 @@
 import axios from 'axios'
 
-import { BASE_URL } from './urls'
+import { BASE_URL, MAIN, SEARCH } from './urls'
 
 export default {
     install(app) {
-        app.config.globalProperties.$fetch = async ({ requestName }) => {
+        app.config.globalProperties.$fetch = async ({ requestName, type }) => {
             const { data } = await axios({
-                url: `${BASE_URL}/main?apiKey=1216&requestName=${requestName}`,
+                url: `${BASE_URL}${MAIN}?apiKey=1216&requestName=${requestName}`,
+                method: 'GET'
+            }) 
+
+            return data
+        },
+        app.config.globalProperties.$search = async ({ searchText }) => {
+            console.log('SEARCH BASE URL: ',`${BASE_URL}${SEARCH}?apiKey=1216&searchText=${searchText}`)
+            const { data } = await axios({
+                url: `${BASE_URL}${SEARCH}?apiKey=1216&searchText=${searchText}`,
                 method: 'GET'
             }) 
 

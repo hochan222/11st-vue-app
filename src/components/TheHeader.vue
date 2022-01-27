@@ -23,11 +23,26 @@
           class="search__icon"
           @click="search"
         >
-
         </div>
       </div>
       <div class="ranking">
-
+        <div ref="swiper" class="swiper">
+          <div class="swiper-wrapper">
+            <div 
+              v-for="(rank, index) in rankings.rankings"  
+              class="swiper-slide" 
+              :key="rank.name"
+            >
+              <a :href="rank.href">
+                <span class="index">{{ index + 1 }}</span>
+                <span class="name">{{ rank.name }}</span>
+              </a>
+              <div
+                class="open-more"
+                @click="toggleRankingWrap"></div>
+            </div>
+          </div>
+        </div>
       </div>
       <div class="user-menu">
 
@@ -37,20 +52,49 @@
 </template>
 
 <script>
+import Swiper from 'swiper/bundle'
+import 'swiper/css/bundle'
+
 export default {
   data() {
     return {
-      searchText: ''
+      searchText: '',
+      rankings: {}
     }
   },
-  computed: {
-
+  mounted() {
+    this.init()
   },
   methods: {
+    async init() {
+      this.rankings = await this.$fetch({
+        requestName: 'rankings'
+      })
+      console.log(this.rankings)
+
+      await this.$nextTick()
+
+      // Swiper start
+      new Swiper(this.$refs.swiper, {
+        direction: 'vertical',
+        speed: 1000,
+        autoplay: {
+          delay: 3000
+        },
+        loop: true
+      })      
+      // Swiper end
+    },
     onNav() {
       this.$store.dispatch('navigation/onNav')
     },
-    search() {
+    async search() {
+      const data = await this.$search({
+        searchText: this.searchText,
+      })
+      console.log(data)
+    },
+    toggleRankingWrap () {
 
     }
   }
@@ -135,5 +179,67 @@ header {
       background-size: 363px;
     }
   } // search end
+  .ranking {
+    width: 210px;
+    position: relative;
+    margin: 0 30px;
+    .swiper {
+      width: 182px;
+      height: 28px;
+      margin: 0;
+      .swiper-slide {
+        transition: .4s;
+        opacity: 0;
+        a {
+          display: block;
+          height: 28px;
+          line-height: 28px;
+          text-decoration: none;
+          font-size: 15px;
+          color: #333;
+          font-weight: 700;
+          .index {
+            margin-right: 10px;
+            color: #f43142;
+            font-style: italic;
+          }
+          &:hover .name {
+            color: #f43142;
+          }
+        }
+        &.swiper-slide-active {
+          opacity: 1;
+        }
+      }
+    }
+    .open-more {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      position: absolute;
+      top: 0;
+      right: 0;
+      z-index: 1; // Required! Cause Swiper.
+      cursor: pointer;
+      user-select: none; // 실시간 쇼핑 검색어가 자동으로 선택(Selection)되는 것을 방지.
+      &:hover {
+        background-color: #ececec;
+      }
+      &::after {
+        content: "";
+        display: block;
+        width: 7px;
+        height: 7px;
+        margin-top: -3px;
+        border: solid #999;
+        border-width: 0 1px 1px 0;
+        box-sizing: border-box;
+        transform: rotate(45deg);
+      }
+    }
+  } // ranking end
 }
 </style>
