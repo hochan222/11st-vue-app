@@ -1,18 +1,28 @@
 <template>
   <nav v-if="done" class="show">
+    <!-- navigation user space -->
     <div class="user">
       <a href="#">로그인</a>
       <div class="flex-space"></div>
       <div class="close-nav"></div>
     </div>
-    <div class="container">
+    <!-- navigation container space -->
+    <div 
+      class="container" 
+      @mouseleave="categoryHover = -1"
+    >
       <!-- 카테고리 -->
-      <div class="group catagories">
+      <div class="group categories">
         <h3 class="group__title">
           카테고리
         </h3>
         <ul class="group__list">
-          <li v-for="(item1, index) in navigations.categories.list" :key="item1.name">
+          <li 
+            v-for="(item1, index) in navigations.categories.list" 
+            :key="item1.name" 
+            :class="{ hover: categoryHover === index }" 
+            @mouseenter="categoryHover = index"
+          >
             <div class="category-icon"></div>
             {{ item1.name }}
             <ul class="depth">
@@ -27,6 +37,22 @@
           </li>
         </ul>
       </div>
+      <!-- 주요 서비스 -->
+      <div class="group major-services">
+        <div class="group__title">
+          주요 서비스
+        </div>
+        <ul class="group__list">
+          <li 
+            v-for="item in navigations.majorServices.list" 
+            :key="item.name"
+          >
+            <a :href="item.href">
+              {{ item.name }}
+            </a>
+          </li>
+        </ul>
+      </div>
     </div>
   </nav>
 </template>
@@ -36,7 +62,8 @@ export default {
   data() {
     return {
       navigations: {},
-      done: false
+      done: false,
+      categoryHover: -1
     }
   },
   created() {
@@ -110,6 +137,7 @@ nav {
     a {
       color: #333;
     }
+    //공통
     .group {
       background-color: #fff;
       margin-bottom: 10px;
@@ -137,6 +165,95 @@ nav {
           }
         }
       }
+    }
+    // 개별
+    .group {
+      &.categories {
+        .group__list {
+          > li {
+            height: 50px;
+            padding: 0 25px;
+            .category-icon {
+              width: 24px;
+              height: 24px;
+              margin-right: 4px;
+              background-image: url("https://trusting-williams-8cacfb.netlify.app/images/categories_2x.png");
+              background-size: 48px; // Origin 96px
+            }
+            @for $i from 1 through 13 {
+              &:nth-child(#{$i}) {
+                .category-icon {
+                  background-position: 0 -#{($i - 1) * 24}px;
+                }
+              }
+            }
+            &.hover {
+              background-color: #ff5534;
+              color: #fff;
+              @for $i from 1 through 13 {
+                &:nth-child(#{$i}) {
+                  .category-icon {
+                    background-position: -24px -#{($i - 1) * 24}px;
+                  }
+                }
+              }
+            }
+            .depth {
+              display: none;
+              width: 200px;
+              height: 100%;
+              border-left: 1px solid #eee;
+              padding: 20px 0;
+              box-sizing: border-box;
+              position: fixed;
+              top: 0;
+              bottom: 0;
+              left: 300px;
+              background-color: #fff;
+              overflow-y: auto;
+              font-size: 15px;
+              li {
+                height: 40px;
+                a {
+                  padding: 0 20px;
+                }
+                &:hover {
+                  background-color: #fafafa;
+                  color: #ff5534;
+                  a {
+                    color: #ff5534;
+                  }
+                }
+              }
+            }
+            &.hover .depth {
+              display: block;
+            }
+          }
+        }
+      } // category end
+
+      &.major-services {
+        .group__list {
+          display: flex;
+          flex-wrap: wrap;
+          li {
+            width: 50%;
+            height: 50px;
+            a {
+              padding-left: 25px;
+            }
+            &:hover {
+              background-color: #fafafa;
+              color: #ff5534;
+              a {
+                color: #ff5534;
+              }
+            }
+          }
+        }
+      } // major-services end
+      
     }
   }
 }
