@@ -9,6 +9,7 @@
     <!-- navigation container space -->
     <div 
       class="container" 
+      ref="container"
       @mouseleave="categoryHover = -1"
     >
       <!-- 카테고리 -->
@@ -106,7 +107,7 @@
               <img
                 :src="item.src"
                 :alt="item.name"
-                width="112" />
+                width="113" />
             </a>
           </li>
         </ul>
@@ -166,12 +167,17 @@
 </template>
 
 <script>
+import _upperFirst from 'lodash/upperFirst'
+
 export default {
   data() {
     return {
       navigations: {},
       done: false,
       categoryHover: -1,
+      isShowOutlets: false,
+      isShowPartners: false,
+      isShowBrandMall: false,
     }
   },
   computed: {
@@ -193,6 +199,17 @@ export default {
     },
     offNav() {
       this.$store.dispatch('navigation/offNav')
+    },
+    toggleGroup (name) {
+      const pascalCaseName = _upperFirst(name)
+      const computedName = `isShow${pascalCaseName}`
+      this.$data[computedName] = !this.$data[computedName]
+      if (this.$data[computedName]) {
+        // 반응성이 나타난 후 콜백 실행!
+        this.$nextTick(() => {
+          this.$refs.container.scrollTop = this.$refs[name].offsetTop - 75
+        })
+      }
     }
   }
 }
@@ -265,6 +282,27 @@ nav {
         font-size: 17px;
         font-weight: 700;
         position: relative;
+        .toggle-list {
+          position: absolute;
+          top: 0;
+          right: 0;
+          width: 60px;
+          height: 100%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          &::after {
+            content: "";
+            display: block;
+            width: 7px;
+            height: 7px;
+            margin-top: -3px;
+            border: solid #333;
+            border-width: 0 1px 1px 0;
+            box-sizing: border-box;
+            transform: rotate(45deg);
+          }
+        }
       }
       &__list {
         li {
@@ -369,9 +407,81 @@ nav {
           }
         }
       } // major-services end
-      
+
+      &.outlets {
+        .group__title {
+          cursor: pointer;
+        }
+        .group__list {
+          padding-bottom: 25px;
+          li {
+            height: auto;
+            margin-top: 10px;
+            padding-left: 25px;
+          }
+        }
+      } // outlets end
+
+      &.partners {
+        .group__title {
+          cursor: pointer;
+        }
+        .group__list {
+          display: flex;
+          flex-wrap: wrap;
+          padding-bottom: 25px;
+          li {
+            width: 50%;
+            height: 60px;
+            a {
+              justify-content: center;
+            }
+          }
+        }
+      } // partners end
+
+      &.brand-mall {
+        .group__title {
+          cursor: pointer;
+        }
+        .group__list {
+          display: flex;
+          flex-wrap: wrap;
+          padding-bottom: 25px;
+          li {
+            width: 33.33%;
+            height: auto;
+            margin-top: 20px;
+            &:nth-child(-n+3) {
+              margin-top: 0;
+            }
+            a {
+              justify-content: center;
+              flex-direction: column;
+              span.brand-name {
+                font-size: 14px;
+                color: #666;
+              }
+            }
+          }
+        }
+      } // brand-mall end
     }
   }
+  .exhibitions {
+    width: 300px;
+    height: 94px;
+    a {
+      display: block;
+      width: inherit;
+      height: inherit;
+      cursor: pointer;
+      img {
+        width: inherit;
+        height: inherit;
+      }
+    }
+  } // exhibitions end
 }
 .nav-bg {
   position: fixed;
