@@ -13,7 +13,6 @@ export default {
             return data
         },
         app.config.globalProperties.$search = async ({ searchText }) => {
-            console.log('SEARCH BASE URL: ',`${BASE_URL}${SEARCH}?apiKey=1216&searchText=${searchText}`)
             const { data } = await axios({
                 url: `${BASE_URL}${SEARCH}?apiKey=1216&searchText=${searchText}`,
                 method: 'GET'

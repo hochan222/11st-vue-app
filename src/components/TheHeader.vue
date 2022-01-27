@@ -70,7 +70,6 @@ export default {
       this.rankings = await this.$fetch({
         requestName: 'rankings'
       })
-      console.log(this.rankings)
 
       await this.$nextTick()
 
@@ -92,7 +91,7 @@ export default {
       const data = await this.$search({
         searchText: this.searchText,
       })
-      console.log(data)
+      console.log('검색결과:', data)
     },
     toggleRankingWrap () {
 
