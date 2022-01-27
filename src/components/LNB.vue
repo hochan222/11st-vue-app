@@ -195,7 +195,6 @@ export default {
         requestName: 'navigations'
       })
       this.done = true
-      console.log(this.navigations)
     },
     offNav() {
       this.$store.dispatch('navigation/offNav')
@@ -205,7 +204,6 @@ export default {
       const computedName = `isShow${pascalCaseName}`
       this.$data[computedName] = !this.$data[computedName]
       if (this.$data[computedName]) {
-        // 반응성이 나타난 후 콜백 실행!
         this.$nextTick(() => {
           this.$refs.container.scrollTop = this.$refs[name].offsetTop - 75
         })
